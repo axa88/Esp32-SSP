@@ -23,11 +23,11 @@ Supports the ability to change IO Capabilities and Security and Encryption param
 | ESP_LE_AUTH_REC_SC_MITM      | Secure Connections, MITM protection          | 8      |
 | ESP_LE_AUTH_REC_SC_MITM_BOND | Secure Connections, MITM protection, Bonding | 9      |
 
-| Encryption           |                                                                                                               | HotKey |
-| -------------------- | ------------------------------------------------------------------------------------------------------------- | ------ |
-| ESP_BLE_ENC_KEY_MASK | Toggle exchanging the encryption key (Long Term Key, LTK) to secure data transmission                         | X      |
-| ESP_BLE_ID_KEY_MASK  | Toggle exchanging the Identity Resolving Key (IRK) to enhance privacy by resolving private addresses          | Y      |
-| ESP_BLE_CSR_KEY_MASK | Exchanging theExchanging the connection signature resolving key (CSRK) Ensure data integrity and authenticity | Z      |
+| Encryption           |                                                                                                        | HotKey |
+| -------------------- | ------------------------------------------------------------------------------------------------------ | ------ |
+| ESP_BLE_ENC_KEY_MASK | Toggle exchanging the encryption key (Long Term Key, LTK) to secure data transmission                  | X      |
+| ESP_BLE_ID_KEY_MASK  | Toggle exchanging the Identity Resolving Key (IRK) to enhance privacy by resolving private addresses   | Y      |
+| ESP_BLE_CSR_KEY_MASK | Toggle exchanging the connection signature resolving key (CSRK) Ensure data integrity and authenticity | Z      |
 
 | Static PIN |                  | HotKey |
 | ---------- | ---------------- | ------ |
@@ -35,7 +35,7 @@ Supports the ability to change IO Capabilities and Security and Encryption param
 
 ### Results Windows 11 BT 5.3 SecureConnetions
 
-![](https://holocron.so/uploads/452df0e6-image.png)
+![](https://holocron.so/uploads/9dbedd76-image.png)
 
 <https://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents>
 
