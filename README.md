@@ -1,7 +1,7 @@
 # Esp32-Pairing Peripheral
 
 A Bluetooth peripheral for testing initiator pairing implementations.\
-Supports the ability to change IO Capabilities and Security and Encryption parameters on the fly.
+Supports the ability to change IO Capabilities, Authentication and Encryption parameters on the fly.
 
 ## Features
 
