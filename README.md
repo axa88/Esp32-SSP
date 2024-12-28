@@ -35,8 +35,8 @@ Supports the ability to change IO Capabilities and Security and Encryption param
 
 ### Results
 
-![](https://holocron.so/uploads/9dbedd76-image.png)
+![](https://holocron.so/uploads/a9af02cb-image.png)
 
-<https://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents>
+[ttps://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents](https://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents)
 
 ...
