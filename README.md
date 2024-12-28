@@ -3,9 +3,9 @@
 A Bluetooth peripheral for testing initiator pairing implementations.\
 Supports the ability to change IO Capabilities and Security and Encryption parameters on the fly.
 
-## Device Input and Output capabilities 
+## Features
 
-| esp_ble_io_cap_t  |                                                                        | HotKey |
+| IO Capabilities   |                                                                        | HotKey |
 | ----------------- | ---------------------------------------------------------------------- | ------ |
 | ESP_IO_CAP_NONE   | Peripheral can display a PIN, has no inputhas no IO                    | 0      |
 | ESP_IO_CAP_OUT    | Peripheral can display a PIN, has no input                             | 1      |
