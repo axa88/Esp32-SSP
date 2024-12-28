@@ -37,6 +37,7 @@ Supports the ability to change IO Capabilities, Authentication and Encryption pa
 
 ![](https://holocron.so/uploads/874379d0-image.png)
 
-[://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents](https://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents)
+.....\
+[ link](https://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents)
 
 ...
