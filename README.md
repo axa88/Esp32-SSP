@@ -33,7 +33,7 @@ Supports the ability to change IO Capabilities and Security and Encryption param
 | ---------- | ---------------- | ------ |
 | Set        | Set a static PIN | P      |
 
-### Results Windows 11 BT 5.3 SecureConnetions
+### Results
 
 ![](https://holocron.so/uploads/9dbedd76-image.png)
 
