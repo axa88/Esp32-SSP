@@ -1,11 +1,11 @@
 # Esp32-Pairing Peripheral
 
 A Bluetooth peripheral for testing initiator pairing implementations.\
-Supports the ability to change IO Capabilities and Security and Encryption parameters on the fly.
+Supports the ability to change IO Capabilities, Authentication and Encryption parameters on the fly.
 
-## Device Input and Output capabilities 
+## Features
 
-| esp_ble_io_cap_t  |                                                                        | HotKey |
+| IO Capabilities   |                                                                        | HotKey |
 | ----------------- | ---------------------------------------------------------------------- | ------ |
 | ESP_IO_CAP_NONE   | Peripheral can display a PIN, has no inputhas no IO                    | 0      |
 | ESP_IO_CAP_OUT    | Peripheral can display a PIN, has no input                             | 1      |
@@ -23,20 +23,19 @@ Supports the ability to change IO Capabilities and Security and Encryption param
 | ESP_LE_AUTH_REC_SC_MITM      | Secure Connections, MITM protection          | 8      |
 | ESP_LE_AUTH_REC_SC_MITM_BOND | Secure Connections, MITM protection, Bonding | 9      |
 
-| Encryption           |                                                                                                               | HotKey |
-| -------------------- | ------------------------------------------------------------------------------------------------------------- | ------ |
-| ESP_BLE_ENC_KEY_MASK | Toggle exchanging the encryption key (Long Term Key, LTK) to secure data transmission                         | X      |
-| ESP_BLE_ID_KEY_MASK  | Toggle exchanging the Identity Resolving Key (IRK) to enhance privacy by resolving private addresses          | Y      |
-| ESP_BLE_CSR_KEY_MASK | Exchanging theExchanging the connection signature resolving key (CSRK) Ensure data integrity and authenticity | Z      |
+| Encryption           |                                                                                                     | HotKey |
+| -------------------- | --------------------------------------------------------------------------------------------------- | ------ |
+| ESP_BLE_ENC_KEY_MASK | Toggle exchanging the encryption key Long Term Key (LTK), secure data transmission                  | X      |
+| ESP_BLE_ID_KEY_MASK  | Toggle exchanging the identity resolving key (IRK), enhances privacy by resolving private addresses | Y      |
+| ESP_BLE_CSR_KEY_MASK | Toggle exchanging the connection signature resolving key (CSRK), ensures data integrity             | Z      |
 
-| Static PIN |                  | HotKey |
-| ---------- | ---------------- | ------ |
-| Set        | Set a static PIN | P      |
+| Static PIN   |                  | HotKey |
+| ------------ | ---------------- | ------ |
+| setStaticPIN | Set a static PIN | P      |
 
-### Results Windows 11 BT 5.3 SecureConnetions
+### Results
 
-![](https://holocron.so/uploads/452df0e6-image.png)
+![](https://holocron.so/uploads/5022be91-image.png)
 
-<https://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents>
-
-...
+...\
+[ link](https://onedrive.live.com/view.aspx?resid=A6B4ADD4E4C05CFA!382&id=documents)
