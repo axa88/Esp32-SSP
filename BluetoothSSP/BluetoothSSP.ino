@@ -5,6 +5,8 @@
 #include <BLESecurity.h>
 #include <BLEAdvertisedDevice.h>
 
+#define PRINT_VAR(var) Serial.print(#var ": "); Serial.println(var)
+
 // Define the BLE service and characteristic UUIDs
 #define SERVICE_UUID           "12345678-1234-5678-1234-56789abcdef0"
 #define CHARACTERISTIC_UUID    "87654321-4321-8765-4321-abcdef123456"
@@ -15,6 +17,8 @@ BLESecurity* pSecurity = new BLESecurity();
 
 byte inputMode; 
 uint8_t encryptionMask = ESP_BLE_ENC_KEY_MASK | ESP_BLE_ID_KEY_MASK | ESP_BLE_CSR_KEY_MASK;
+esp_ble_io_cap_t capabilities = ESP_IO_CAP_KBDISP;
+esp_ble_auth_req_t authentication = ESP_LE_AUTH_REQ_SC_MITM_BOND;
 
 // Server callback for BLE connection events
 class ServerCallbacks : public BLEServerCallbacks
@@ -82,7 +86,7 @@ class SecurityCallbacks : public BLESecurityCallbacks
         delay(10); // Give time for the serial input to be available
     }
 
-    uint32_t passkeyEntered = input.toInt(); // Convert input to integer
+    uint32_t passkeyEntered = input.toInt();
     // Ensure the passkey is a valid 6-digit number
     if (passkeyEntered < 000000 || passkeyEntered > 999999)
         Serial.println("Invalid passkey entered");
@@ -114,10 +118,10 @@ class SecurityCallbacks : public BLESecurityCallbacks
         if (Serial.available() > 0)
         {
           input = Serial.readStringUntil('\n');  // Read input until newline
-          input.trim();  // Remove any leading/trailing spaces/newlines
+          input.trim();
         }
 
-        if (millis() - startTime > timeout)  // Check if timeout have passed
+        if (millis() - startTime > timeout)
         {
           Serial.println("Timeout occurred, using default passkey.");
           input = "n";
@@ -189,6 +193,7 @@ class SecurityCallbacks : public BLESecurityCallbacks
   }
 };
 
+
 void setup()
 {
   Serial.begin(115200);
@@ -204,8 +209,8 @@ void setup()
 
   // to work with Windows 11 static pin must be set before other security parameters
   // pSecurity->setStaticPIN(654321); // only works when negotiated mode is peripheral out initiator in 
-  pSecurity->setCapability(ESP_IO_CAP_KBDISP);
-  pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_MITM_BOND);
+  pSecurity->setCapability(capabilities);
+  pSecurity->setAuthenticationMode(authentication);
   pSecurity->setInitEncryptionKey(encryptionMask);
   pSecurity->setRespEncryptionKey(encryptionMask);
 
@@ -229,28 +234,30 @@ void loop()
 
   Serial.println("");
   Serial.println("Set Capabilities:");
-  Serial.println("- No input or output '`0");
-  Serial.println("- Display only '1'");
-  Serial.println("- Keyboard only '2'");
-  Serial.println("- Display and Confirm '3'");
-  Serial.println("- Keyboard and Display '4'");
+  Serial.println("- A --> No input or output");
+  Serial.println("- B --> Keyboard only");
+  Serial.println("- C --> Display only");
+  Serial.println("- D --> Display and Confirm");
+  Serial.println("- E --> Keyboard and Display");
   Serial.println("");
   Serial.println("Set Authorization:");
-  Serial.println("- No Bonding 'N'");
-  Serial.println("- Only Bonding 'B'");
-  Serial.println("- Only MITM 'M'");
-  Serial.println("- Only Secure Connections 'S'");
-  Serial.println("- Secure Connections + Bonding '7'");
-  Serial.println("- Secure Connections + MITM '8'");
-  Serial.println("- Secure Connections with MITM and Bonding '9'");
+  Serial.println("- F --> No Bonding");
+  Serial.println("- G --> Only Bonding");
+  Serial.println("- H  --> Only MITM");
+  Serial.println("- I  --> Only Secure Connections");
+  Serial.println("- J  --> Secure Connections + Bonding");
+  Serial.println("- K  --> Secure Connections + MITM");
+  Serial.println("- L --> Secure Connections with MITM and Bonding");
   Serial.println("");
   Serial.println("Set Encryption");
-  Serial.println("- Toggle LTK Encryption key exchange 'X'");
-  Serial.println("- Toggle IRK Encryption key exchange 'Y'");
-  Serial.println("- Toggle CSRK Encryption key exchange 'Z'");
+  Serial.println("- M --> Toggle LTK Encryption key exchange");
+  Serial.println("- N --> Toggle IRK Encryption key exchange");
+  Serial.println("- O --> Toggle CSRK Encryption key exchange");
   Serial.println("");
-  Serial.println("Set Static PIN 'P'");
+  Serial.println("- P --> Set Static PIN");
   Serial.println("");
+  Serial.println("- Q --> Print Config");
+  
 
   // Wait until a valid passkey is entered
   while (input.length() == 0)
@@ -258,73 +265,73 @@ void loop()
       if (Serial.available() > 0)
       {
         input = Serial.readStringUntil('\n');  // Read input until newline
-        input.trim();  // Remove any leading/trailing chars
+        input.trim();
       }
 
       delay(20);  // Give time for the serial input to be available
   }
 
-  if (input.equals("0"))
+  if (input.equalsIgnoreCase("A"))
   {
-    pSecurity->setCapability(ESP_IO_CAP_NONE);
+    pSecurity->setCapability(capabilities = ESP_IO_CAP_NONE);
     Serial.println("-> No input or output");
   }
-  else if (input.equals("1"))
+  else if (input.equalsIgnoreCase("B"))
   {
-    pSecurity->setCapability(ESP_IO_CAP_OUT);
-    Serial.println("-> Display only");
-  }
-  else if (input.equals("2"))
-  {
-    pSecurity->setCapability(ESP_IO_CAP_IN);
+    pSecurity->setCapability(capabilities = ESP_IO_CAP_IN);
     Serial.println("-> Keyboard only");
   }
-  else if (input.equals("3"))
+  else if (input.equalsIgnoreCase("C"))
   {
-    pSecurity->setCapability(ESP_IO_CAP_IO);
+    pSecurity->setCapability(capabilities = ESP_IO_CAP_OUT);
+    Serial.println("-> Display only");
+  }
+  else if (input.equalsIgnoreCase("D"))
+  {
+    pSecurity->setCapability(capabilities = ESP_IO_CAP_IO);
     Serial.println("-> Display and Confirm");
   }
-  else if (input.equals("4"))
+  else if (input.equalsIgnoreCase("E"))
   {
-    pSecurity->setCapability(ESP_IO_CAP_KBDISP);
+    pSecurity->setCapability(capabilities = ESP_IO_CAP_KBDISP);
     Serial.println("-> Keyboard and Display");
   }
-  else if (input.equals("N") || input.equals("n"))
+  else if (input.equalsIgnoreCase("F"))
   {
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_NO_BOND);
+    pSecurity->setAuthenticationMode(authentication = ESP_LE_AUTH_NO_BOND);
     Serial.println("-> No Bonding");
   }
-  else if (input.equals("B") || input.equals("b"))
+  else if (input.equalsIgnoreCase("G"))
   {
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
+    pSecurity->setAuthenticationMode(authentication = ESP_LE_AUTH_BOND);
     Serial.println("Only Bonding");
   }
-  else if (input.equals("M") || input.equals("m"))
+  else if (input.equalsIgnoreCase("H"))
   {
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_MITM);
+    pSecurity->setAuthenticationMode(authentication = ESP_LE_AUTH_REQ_MITM);
     Serial.println("-> Only MITM");
   }
-  else if (input.equals("S") || input.equals("s"))
+  else if (input.equalsIgnoreCase("I"))
   {
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_ONLY);
+    pSecurity->setAuthenticationMode(authentication = ESP_LE_AUTH_REQ_SC_ONLY);
     Serial.println("-> Only Secure Connections");
   }
-  else if (input.equals("7"))
+  else if (input.equalsIgnoreCase("J"))
   {
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_BOND);
+    pSecurity->setAuthenticationMode(authentication = ESP_LE_AUTH_REQ_SC_BOND);
     Serial.println("-> Secure Connections + Bonding");
   }
-  else if (input.equals("8"))
+  else if (input.equalsIgnoreCase("K"))
   {
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_MITM);
+    pSecurity->setAuthenticationMode(authentication = ESP_LE_AUTH_REQ_SC_MITM);
     Serial.println("-> Secure Connections + MITM");
   }
-  else if (input.equals("9"))
+  else if (input.equalsIgnoreCase("L"))
   {
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_MITM_BOND);
+    pSecurity->setAuthenticationMode(authentication = ESP_LE_AUTH_REQ_SC_MITM_BOND);
     Serial.println("-> Secure Connections with MITM and Bonding");
   }
-  else if (input.equals("X") || input.equals("x"))
+  else if (input.equalsIgnoreCase("M"))
   {
     encryptionMask ^= ESP_BLE_ENC_KEY_MASK;
     pSecurity->setInitEncryptionKey(encryptionMask);
@@ -332,7 +339,7 @@ void loop()
     Serial.print("-> Toggled LTK Encryption keys:");
     Serial.println(encryptionMask);
   }
-  else if (input.equals("Y") || input.equals("y"))
+  else if (input.equalsIgnoreCase("N"))
   {
     encryptionMask ^= ESP_BLE_ID_KEY_MASK;
     pSecurity->setInitEncryptionKey(encryptionMask);
@@ -340,7 +347,7 @@ void loop()
     Serial.print("-> Toggled IRK Encryption keys:");
     Serial.println(encryptionMask);
   }
-  else if (input.equals("Z") || input.equals("z"))
+  else if (input.equalsIgnoreCase("O"))
   {
     encryptionMask ^= ESP_BLE_CSR_KEY_MASK;
     pSecurity->setInitEncryptionKey(encryptionMask);
@@ -348,15 +355,20 @@ void loop()
     Serial.print("-> Toggled CSRK Encryption keys:");
     Serial.println(encryptionMask);
   }
-  else if (input.equals("P") || input.equals("p"))
+  else if (input.equalsIgnoreCase("P"))
   {
-    // ToDo save and reapply pSecurity
-    pSecurity->setStaticPIN(654321); // only works when negotiated mode is peripheral out initiator in 
-    pSecurity->setCapability(ESP_IO_CAP_KBDISP);
-    pSecurity->setAuthenticationMode(ESP_LE_AUTH_REQ_SC_MITM_BOND);
+    pSecurity->setStaticPIN(654321);
+    pSecurity->setCapability(capabilities);
+    pSecurity->setAuthenticationMode(authentication);
     pSecurity->setInitEncryptionKey(encryptionMask);
     pSecurity->setRespEncryptionKey(encryptionMask);
     Serial.println("-> Static PIN");
+  }
+  else if (input.equalsIgnoreCase("Q"))
+  {
+    PRINT_VAR(encryptionMask);
+    PRINT_VAR(capabilities);
+    PRINT_VAR(authentication);
   }
 
   input = "";
